@@ -39,7 +39,7 @@ stages:
               repositoryName: 'qbituniverse/qbitcraft'
               action: 'create'
               target: '$(Build.SourceVersion)'
-              tagSource: 'manual'
+              tagSource: 'userSpecifiedTag'
               tag: 'v1.0.0'
               assets: '$(Build.SourcesDirectory)/target/dist/*.jar'
               changeLogCompareToRelease: 'lastFullRelease'
