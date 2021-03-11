@@ -8,11 +8,21 @@ pr: none
 
 stages:
   - stage: MavenBuild
-    displayName: 'Build with Maven'
+    displayName: 'Build Release candidate with Maven'
     jobs:
       - job: MavenPackage
         displayName: 'Package JAR with Maven'
         steps:
+          - task: Maven@3
+            displayName: 'Compile code'
+            inputs:
+              mavenPomFile: 'pom.xml'
+              mavenOptions: '-Xmx3072m'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: '1.11'
+              jdkArchitectureOption: 'x64'
+              publishJUnitResults: false
+              goals: 'compile'
           - task: Maven@3
             displayName: 'Package JAR'
             inputs:
