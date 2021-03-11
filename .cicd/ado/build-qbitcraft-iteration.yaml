@@ -4,6 +4,8 @@ pool:
 trigger:
 - develop
 
+pr: none
+
 stages:
   - stage: MavenBuild
     displayName: 'Build Iteration candidate with Maven'

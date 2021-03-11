@@ -4,6 +4,8 @@ pool:
 trigger:
 - main
 
+pr: none
+
 stages:
   - stage: MavenBuild
     displayName: 'Build Release candidate with Maven'
@@ -37,7 +39,7 @@ stages:
               repositoryName: 'qbituniverse/qbitcraft'
               action: 'create'
               target: '$(Build.SourceVersion)'
-              tagSource: 'gitTag'
+              tagSource: 'manual'
               tag: 'v1.0.0'
               assets: '$(Build.SourcesDirectory)/target/dist/*.jar'
               changeLogCompareToRelease: 'lastFullRelease'
