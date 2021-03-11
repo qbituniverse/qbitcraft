@@ -1,0 +1,25 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+trigger:
+- main
+
+pr: none
+
+stages:
+  - stage: MavenBuild
+    displayName: 'Build with Maven'
+    jobs:
+      - job: MavenPackage
+        displayName: 'Package JAR with Maven'
+        steps:
+          - task: Maven@3
+            displayName: 'Package JAR'
+            inputs:
+              mavenPomFile: 'pom.xml'
+              mavenOptions: '-Xmx3072m'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: '1.11'
+              jdkArchitectureOption: 'x64'
+              publishJUnitResults: false
+              goals: 'package'
