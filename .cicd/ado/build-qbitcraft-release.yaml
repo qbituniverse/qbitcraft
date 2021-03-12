@@ -25,7 +25,7 @@ stages:
                 Write-Host $pomXml.project.version
                 $version=$pomXml.project.version
                 Write-Host "##vso[task.setvariable variable=version]$version"
-          - powershell: Write-Host "##vso[build.updatebuildnumber]$version"
+          - powershell: Write-Host "##vso[build.updatebuildnumber]$(version)"
             displayName: 'Assign Build Number'
           - task: Maven@3
             displayName: 'Compile code'
@@ -55,11 +55,11 @@ stages:
               action: 'create'
               target: '$(Build.SourceVersion)'
               tagSource: 'userSpecifiedTag'
-              tag: 'v$(version)'
+              tag: '$(version)'
               title: 'Version $(version)'
               addChangeLog: false
-              releaseNotesSource: 'file'
-              releaseNotesFile: './releases/$(version).md'
+              releaseNotesSource: 'filePath'
+              releaseNotesFilePath: '$(Build.SourcesDirectory)/releases/$(version).md'
               assets: |
                 $(Build.SourcesDirectory)/releases/$(version).md
                 $(Build.SourcesDirectory)/target/dist/*.jar
