@@ -6,17 +6,11 @@ Modded by David.b and +Dillyg10+ until 1.8, then taken over by Chris J until 2.0
 
 Minicraft was originally made by Markus Perrson for ludum dare 22 competition.
 
-> This repo is forked from version [2.0.6 of chrisj42/minicraft-plus-revived](https://github.com/chrisj42/minicraft-plus-revived/releases/tag/v2.0.6).
+This repo is forked from version [2.0.6 of chrisj42/minicraft-plus-revived](https://github.com/chrisj42/minicraft-plus-revived/releases/tag/v2.0.6) GitHub repo.
 
-> Version going forward with QbitUniverse will be **1.0.0**.
+Qbitcraft version going forward with QbitUniverse will be **1.0.0**.
 
-# Changelog
-
-## Version 1.0.0
-
-- Initial refactoring
-
-# Backlog
+# Ideas
 
 - Banana:
     - Fruit which gives 3 seconds super power to break anything with just one hit
