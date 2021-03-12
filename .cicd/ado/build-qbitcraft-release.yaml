@@ -6,6 +6,9 @@ trigger:
 
 pr: none
 
+variables:
+  version: 0
+
 stages:
   - stage: MavenBuild
     displayName: 'Build Release candidate with Maven'
@@ -13,6 +16,15 @@ stages:
       - job: MavenPackage
         displayName: 'Package JAR with Maven'
         steps:
+          - task: PowerShell@2
+            displayName: 'Get version from pom.xml'
+            inputs:
+              targetType: 'inline'
+              script: |
+                [xml]$pomXml = Get-Content .\pom.xml
+                Write-Host $pomXml.project.version
+                $version=$pomXml.project.version
+                Write-Host "##vso[task.setvariable variable=version]$version"
           - task: Maven@3
             displayName: 'Compile code'
             inputs:
@@ -34,13 +46,16 @@ stages:
               publishJUnitResults: false
               goals: 'package'
           - task: GitHubRelease@1
+            displayName: 'Create GitHub Release'
             inputs:
               gitHubConnection: 'GitHub'
               repositoryName: 'qbituniverse/qbitcraft'
               action: 'create'
               target: '$(Build.SourceVersion)'
               tagSource: 'userSpecifiedTag'
-              tag: 'v1.0.0'
-              assets: '$(Build.SourcesDirectory)/target/dist/*.jar'
-              changeLogCompareToRelease: 'lastFullRelease'
-              changeLogType: 'commitBased'
+              tag: 'v$(version)'
+              title: 'Version $(version)'
+              addChangeLog: false
+              assets: |
+                $(Build.SourcesDirectory)/README.md
+                $(Build.SourcesDirectory)/target/dist/*.jar

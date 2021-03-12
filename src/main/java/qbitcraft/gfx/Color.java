@@ -11,7 +11,7 @@ public class Color {
 	*/
 	
 	/*
-		To provide a method to the madness, all methods ending in "Color" are copies of the methods of the same name without the "Color" part, except they convert the given value to 24bit Java RGB rather than the normal, minicraft 13-bit total RGB.
+		To provide a method to the madness, all methods ending in "Color" are copies of the methods of the same name without the "Color" part, except they convert the given value to 24bit Java RGB rather than the normal, qbitcraft 13-bit total RGB.
 		Methods containing the word "get" deal with converting the qbitcraft rgb to something else, and unGet for the other way.
 		
 		Another point:
