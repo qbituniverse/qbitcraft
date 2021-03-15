@@ -14,6 +14,6 @@ Qbitcraft version going forward with QbitUniverse will be 1.0.0.
 
 ## Resources
 
-- [Release history](/releases)
+- [Release history](https://github.com/qbituniverse/qbitcraft/releases)
 - [Backlog of ideas](/notes/backlog.md)
 - [License](/LICENSE)
