@@ -59,7 +59,7 @@ stages:
               title: 'Version $(version)'
               addChangeLog: false
               releaseNotesSource: 'filePath'
-              releaseNotesFilePath: '$(Build.SourcesDirectory)/releases/$(version).md'
+              releaseNotesFilePath: '$(Build.SourcesDirectory)/notes/release-$(version).md'
               assets: |
-                $(Build.SourcesDirectory)/releases/$(version).md
-                $(Build.SourcesDirectory)/target/dist/*.jar
+                $(Build.SourcesDirectory)/notes/release-$(version).md
+                $(Build.SourcesDirectory)/target/dist/qbitcraft-$(version).jar
