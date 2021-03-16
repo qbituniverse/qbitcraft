@@ -6,6 +6,9 @@ trigger:
 
 pr: none
 
+variables:
+  version: 0
+
 stages:
   - stage: MavenBuild
     displayName: 'Build Iteration candidate with Maven'
@@ -13,6 +16,17 @@ stages:
       - job: MavenPackage
         displayName: 'Package JAR with Maven'
         steps:
+          - task: PowerShell@2
+            displayName: 'Get version from pom.xml'
+            inputs:
+              targetType: 'inline'
+              script: |
+                [xml]$pomXml = Get-Content .\pom.xml
+                Write-Host $pomXml.project.version
+                $version=$pomXml.project.version
+                Write-Host "##vso[task.setvariable variable=version]$version"
+          - powershell: Write-Host "##vso[build.updatebuildnumber]$(version)-$(Rev:.r)"
+            displayName: 'Assign Build Number'
           - task: Maven@3
             displayName: 'Compile code'
             inputs:
@@ -36,5 +50,5 @@ stages:
           - task: PublishBuildArtifacts@1
             displayName: 'Publish JAR Artifact'
             inputs:
-              PathtoPublish: '$(Build.SourcesDirectory)/target/dist'
-              ArtifactName: 'dist'
+              PathtoPublish: '$(Build.SourcesDirectory)/target/qbitcraft-$(version).jar'
+              ArtifactName: 'build'

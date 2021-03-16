@@ -98,7 +98,7 @@
                 <version>3.2.0</version>
                 <configuration>
                     <appendAssemblyId>false</appendAssemblyId>
-                    <outputDirectory>${project.build.directory}/dist</outputDirectory>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
                     <archive>
                         <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
