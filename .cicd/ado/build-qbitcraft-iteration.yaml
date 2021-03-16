@@ -8,7 +8,7 @@ pr: none
 
 variables:
   version: 0
-  increment: "$(version)-$(Rev:.r)"
+  increment: "$(version).$(Rev:r)"
 
 stages:
   - stage: MavenBuild
