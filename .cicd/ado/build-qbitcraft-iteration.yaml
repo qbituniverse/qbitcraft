@@ -8,7 +8,7 @@ pr: none
 
 variables:
   version: 0
-  increment: "$(version).$(Rev:.rr)"
+  increment: $[counter(format('{0:yyyyMMdd}', pipeline.startTime), 1)]
 
 stages:
   - stage: MavenBuild
@@ -26,7 +26,7 @@ stages:
                 Write-Host $pomXml.project.version
                 $version=$pomXml.project.version
                 Write-Host "##vso[task.setvariable variable=version]$version"
-          - powershell: Write-Host "##vso[build.updatebuildnumber]$(increment)"
+          - powershell: Write-Host "##vso[build.updatebuildnumber]$(version)-$(increment)"
             displayName: 'Assign Build Number'
           - task: Maven@3
             displayName: 'Compile code'
