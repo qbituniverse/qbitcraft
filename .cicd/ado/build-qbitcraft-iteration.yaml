@@ -8,6 +8,7 @@ pr: none
 
 variables:
   version: 0
+  iteration: $(version)-$(Rev:.r)
 
 stages:
   - stage: MavenBuild
@@ -25,7 +26,7 @@ stages:
                 Write-Host $pomXml.project.version
                 $version=$pomXml.project.version
                 Write-Host "##vso[task.setvariable variable=version]$version"
-          - powershell: Write-Host "##vso[build.updatebuildnumber]$(version)-$(Rev:.r)"
+          - powershell: Write-Host "##vso[build.updatebuildnumber]$(iteration)"
             displayName: 'Assign Build Number'
           - task: Maven@3
             displayName: 'Compile code'
