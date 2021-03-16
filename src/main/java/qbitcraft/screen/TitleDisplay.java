@@ -177,9 +177,9 @@ public class TitleDisplay extends Display {
 	}
 	
 	private static final String[] splashes = {
-			"Tata's and Leo's Qbitcraft",
-			"Tata's and Leo's Qbitcraft",
-			"Tata's and Leo's Qbitcraft",
-			"Tata's and Leo's Qbitcraft"
+			"Learn Java with Qbitcraft",
+			"Explore Java with Qbitcraft",
+			"Qbitcraft loves Java",
+			"Java loves Qbitcraft"
 	};
 }
