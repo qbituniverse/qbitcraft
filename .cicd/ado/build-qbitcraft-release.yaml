@@ -1,0 +1,65 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+trigger:
+- main
+
+pr: none
+
+variables:
+  version: 0
+
+stages:
+  - stage: MavenBuild
+    displayName: 'Build Release candidate with Maven'
+    jobs:
+      - job: MavenPackage
+        displayName: 'Package JAR with Maven'
+        steps:
+          - task: PowerShell@2
+            displayName: 'Get version from pom.xml'
+            inputs:
+              targetType: 'inline'
+              script: |
+                [xml]$pomXml = Get-Content .\pom.xml
+                Write-Host $pomXml.project.version
+                $version=$pomXml.project.version
+                Write-Host "##vso[task.setvariable variable=version]$version"
+          - powershell: Write-Host "##vso[build.updatebuildnumber]$(version)"
+            displayName: 'Assign Build Number'
+          - task: Maven@3
+            displayName: 'Compile code'
+            inputs:
+              mavenPomFile: 'pom.xml'
+              mavenOptions: '-Xmx3072m'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: '1.11'
+              jdkArchitectureOption: 'x64'
+              publishJUnitResults: false
+              goals: 'compile'
+          - task: Maven@3
+            displayName: 'Package JAR'
+            inputs:
+              mavenPomFile: 'pom.xml'
+              mavenOptions: '-Xmx3072m'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: '1.11'
+              jdkArchitectureOption: 'x64'
+              publishJUnitResults: false
+              goals: 'package'
+          - task: GitHubRelease@1
+            displayName: 'Create GitHub Release'
+            inputs:
+              gitHubConnection: 'GitHub'
+              repositoryName: 'qbituniverse/qbitcraft'
+              action: 'create'
+              target: '$(Build.SourceVersion)'
+              tagSource: 'userSpecifiedTag'
+              tag: '$(version)'
+              title: 'Version $(version)'
+              addChangeLog: false
+              releaseNotesSource: 'filePath'
+              releaseNotesFilePath: '$(Build.SourcesDirectory)/notes/releases/$(version).md'
+              assets: |
+                $(Build.SourcesDirectory)/notes/releases/$(version).md
+                $(Build.SourcesDirectory)/target/qbitcraft-$(version).jar
